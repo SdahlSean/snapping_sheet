@@ -9,7 +9,7 @@ class SnapPosition {
   final double positionPixel;
 
   /// The snapping position in pixels from top of screen
-  /// [positionFactor, positionPixel] should be null if this is used
+  /// [positionFactor, positionPixel] should be null if this is used.
   final double positionPixelFromTop;
 
   /// The snapping position in relation of the

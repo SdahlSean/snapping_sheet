@@ -33,7 +33,7 @@ class SnapPosition {
   double _getPositionInPixels(double height) {
     if (positionPixel != null) {
       return positionPixel;
-    } else if (positionPixelFrom != null) {
+    } else if (positionPixelFromTop != null) {
       return height - positionPixel;
     }
     return height * positionFactor;

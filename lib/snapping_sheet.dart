@@ -5,11 +5,15 @@ import 'package:flutter/widgets.dart';
 /// A snapping position that tells how a [SnappingSheet] snapps to different positions
 class SnapPosition {
   /// The snapping position in pixels
-  /// [positionFactor] should be null if this is used.
+  /// [positionFactor, positionPixelFromTop] should be null if this is used.
   final double positionPixel;
 
+  /// The snapping position in pixels from top of screen
+  /// [positionFactor, positionPixel] should be null if this is used
+  final double positionPixelFromTop;
+
   /// The snapping position in relation of the
-  /// available height. [positionPixel] should be null if this is used.
+  /// available height. [positionPixel, positionPixelFromTop] should be null if this is used.
   final double positionFactor;
 
   /// The animation curve to this snapping position
@@ -21,6 +25,7 @@ class SnapPosition {
   const SnapPosition(
       {this.positionFactor,
       this.positionPixel,
+      this.positionPixelFromTop,
       this.snappingCurve = Curves.easeOutExpo,
       this.snappingDuration = const Duration(milliseconds: 500)});
 
@@ -28,6 +33,8 @@ class SnapPosition {
   double _getPositionInPixels(double height) {
     if (positionPixel != null) {
       return positionPixel;
+    } else if (positionPixelFrom != null) {
+      return height - positionPixel;
     }
     return height * positionFactor;
   }

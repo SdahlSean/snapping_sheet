@@ -145,6 +145,9 @@ class _SnappingSheetState extends State<SnappingSheet>
   /// The init snap position for the sheet
   SnapPosition _initSnapPosition;
 
+  /// If the sheet is currently being dragged
+  bool _pointerUp = true;
+
   @override
   void initState() {
     super.initState();
@@ -323,12 +326,14 @@ class _SnappingSheetState extends State<SnappingSheet>
       behavior: HitTestBehavior.translucent,
       child: child,
       onPointerUp: (_) {
+        _pointerUp = true;
         if (!_isDraggable(listenerType)) {
           return;
         }
         _animateToClosestStop();
       },
       onPointerDown: (_) {
+        _pointerUp = false;
         if (!_isDraggable(listenerType)) {
           return;
         }
@@ -374,6 +379,8 @@ class _SnappingSheetState extends State<SnappingSheet>
       _currentConstraints = constraints;
       if (_currentDragAmount == null) {
         _currentDragAmount = _getSnapPositionInPixels(_initSnapPosition);
+      } else if (_pointerUp) {
+        _currentDragAmount = _getSnapPositionInPixels(_lastSnappingLocation);
       }
 
       return Stack(fit: StackFit.expand, children: <Widget>[
